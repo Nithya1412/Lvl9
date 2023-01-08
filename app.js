@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("shh! some secret string"));
 app.use(csrf("this_should_be_32_character_long", ["POST", "PUT", "DELETE"]));
 
+
 app.set("view engine", "ejs");
 app.get("/", async (request, response) => {
   const allTodos = await Todo.getTodos();
@@ -34,7 +35,6 @@ app.get("/", async (request, response) => {
     response.json(overdue, dueLater, dueToday, completedItems);
   }
 });
-
 app.get("/todos", async (request, response) => {
   // defining route to displaying message
   console.log("Todo list");
@@ -46,6 +46,8 @@ app.get("/todos", async (request, response) => {
     return response.status(422).json(error);
   }
 });
+
+
 app.get("/todos/:id", async function (request, response) {
   try {
     const todo = await Todo.findByPk(request.params.id);
@@ -92,4 +94,6 @@ app.delete("/todos/:id", async (request, response) => {
     return response.status(422).json(error);
   }
 });
+
+
 module.exports = app;
