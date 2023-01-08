@@ -5,7 +5,6 @@ const db = require("../models/index");
 const app = require("../app");
 //const todo = require("../models/todo");
 let server, agent;
-
 function extractCsrfToken(res) {
   var $ = cheerio.load(res.text);
   return $("[name=_csrf]").val();
@@ -51,7 +50,6 @@ describe("Todo test suite ", () => {
     const status = latestTodo.completed ? false : true;
     res = await agent.get("/");
     csrfToken = extractCsrfToken(res);
-
     const response = await agent.put(`todos/${latestTodo.id}`).send({
       _csrf: csrfToken,
       completed: status,
@@ -69,7 +67,6 @@ describe("Todo test suite ", () => {
       completed: false,
       _csrf: csrfToken,
     });
-
     const gropuedTodosResponse = await agent
       .get("/")
       .set("Accept", "application/json");
